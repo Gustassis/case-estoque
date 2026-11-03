@@ -4,7 +4,7 @@
   "description": "Case: 300 requisições simultâneas para 1 item em estoque. Checkout ingênuo vs. correto (Node + Postgres), com teste de carga e teste automatizado.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node --test test/checkout.test.js test/webhook.test.js"
   },
   "keywords": [],
   "author": "",

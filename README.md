@@ -1,5 +1,7 @@
 # case-estoque
 
+[![tests](https://github.com/Gustassis/case-estoque/actions/workflows/test.yml/badge.svg)](https://github.com/Gustassis/case-estoque/actions/workflows/test.yml)
+
 **EN:** 300 simultaneous checkout requests for 1 item in stock. A naive checkout (read, check, decrement) versus a correct one (atomic conditional UPDATE, reservation with expiry, idempotent webhook, retry with backoff). Node + PostgreSQL, reproducible with one command, with automated tests.
 
 **PT:** 300 requisições simultâneas de checkout para 1 item em estoque. Um checkout ingênuo (ler, conferir, decrementar) contra um checkout correto (UPDATE condicional atômico, reserva com expiração, webhook idempotente e retry com backoff). Node + PostgreSQL, reproduzível com um comando e com testes automatizados.

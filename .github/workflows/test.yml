@@ -33,6 +33,9 @@ jobs:
       - run: npm ci
 
       - name: Criar tabelas
-        run: PGPASSWORD=loja123 psql -h 127.0.0.1 -U loja -d loja -f db/init.sql
+        run: |
+          export PGPASSWORD=loja123
+          psql -h 127.0.0.1 -U loja -d loja -v ON_ERROR_STOP=1 -f db/init.sql
+          psql -h 127.0.0.1 -U loja -d loja -c "\dt"
 
       - run: npm test

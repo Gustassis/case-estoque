@@ -1,0 +1,38 @@
+name: tests
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_USER: loja
+          POSTGRES_PASSWORD: loja123
+          POSTGRES_DB: loja
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U loja -d loja"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - run: npm ci
+
+      - name: Criar tabelas
+        run: PGPASSWORD=loja123 psql -h 127.0.0.1 -U loja -d loja -f db/init.sql
+
+      - run: npm test

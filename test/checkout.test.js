@@ -47,7 +47,7 @@ async function rodar(arquivo) {
     const r = await disparar();
     const { rows } = await pool.query('SELECT count(*)::int AS n FROM pedidos');
     const { rows: est } = await pool.query('SELECT estoque FROM produtos WHERE id = 1');
-    console.log(`${arquivo}: 2xx=${r['2xx']} | pedidos=${rows[0].n} | estoque=${est[0].estoque}`);
+    console.log(`${arquivo}: enviadas=${r.requests.total} | 2xx=${r['2xx']} | nao2xx=${r.non2xx} | erros=${r.errors} | timeouts=${r.timeouts} | pedidos=${rows[0].n} | estoque=${est[0].estoque}`);
     return rows[0].n;
   } finally {
     proc.kill();
@@ -59,9 +59,9 @@ after(async () => {
   await pool.end();
 });
 
-test('V1 ingenua: nao deve vender mais que o estoque (ESPERADO FALHAR)', async () => {
+test('V1 ingenua: o bug existe (vende mais que o estoque)', async () => {
   const pedidos = await rodar('src/v1-ingenua.js');
-  assert.equal(pedidos, 1, `V1 aceitou ${pedidos} pedidos para 1 item`);
+  assert.ok(pedidos > 1, `esperado overselling na V1, mas ela vendeu ${pedidos}`);
 });
 
 test('V2 correta: vende exatamente 1', async () => {

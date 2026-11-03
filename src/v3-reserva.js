@@ -147,6 +147,7 @@ async function expirarVencidos() {
 }
 setInterval(expirarVencidos, JOB_INTERVALO_MS);
 
-app.listen(3000, () =>
-  console.log(`V3 (reserva ${RESERVA_SEGUNDOS}s) em http://localhost:3000`)
+const PORT = Number(process.env.PORT ?? 3000);
+app.listen(PORT, () =>
+  console.log(`V3 (reserva ${RESERVA_SEGUNDOS}s) em http://localhost:${PORT}`)
 );

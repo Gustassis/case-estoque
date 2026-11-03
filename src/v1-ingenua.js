@@ -43,4 +43,5 @@ app.post('/checkout', async (req, res) => {
   res.status(201).json({ ok: true });
 });
 
-app.listen(3000, () => console.log('V1 (ingenua) em http://localhost:3000'));
+const PORT = Number(process.env.PORT ?? 3000);
+app.listen(PORT, () => console.log(`V1 (ingenua) em http://localhost:${PORT}`));
